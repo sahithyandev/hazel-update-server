@@ -1,5 +1,6 @@
 /* global describe, it, afterEach */
-const micro = require('micro')
+const http = require('http')
+const { serve } = require('micro')
 const listen = require('test-listen')
 
 const initialEnv = Object.assign({}, process.env)
@@ -16,7 +17,7 @@ describe('Server', () => {
     }
 
     const run = require('../lib/server')
-    const server = micro(run)
+    const server = new http.Server(serve(run))
 
     await listen(server)
     server.close()
